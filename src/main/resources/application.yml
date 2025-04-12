@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: dev
+
+logging:
+  config: classpath:log/logback-spring.xml
+  level:
+    root: INFO
