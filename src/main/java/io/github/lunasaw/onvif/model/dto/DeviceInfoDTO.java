@@ -42,7 +42,7 @@ public class DeviceInfoDTO {
     private String ipAddr;
 
     /**
-     * 设备状态
+     * 设备状态 1在线 0离线
      */
     private Integer deviceStatus;
 
@@ -51,70 +51,14 @@ public class DeviceInfoDTO {
      */
     private String extentInfo;
 
-    private ExtendInfo extendInfoObj;
+    private BaseDeviceInfoDTO baseDeviceInfoObj;
 
 
-    public static ExtendInfo getExtendObj(String extentInfo) {
+    public static BaseDeviceInfoDTO getExtendObj(String extentInfo) {
         if (StringUtils.isBlank(extentInfo)) {
-            return new ExtendInfo();
+            return new BaseDeviceInfoDTO();
         }
         String extend = Optional.of(extentInfo).orElse(StringUtils.EMPTY);
-        return JSON.parseObject(extend, ExtendInfo.class);
-    }
-
-    @Data
-    public static class ExtendInfo {
-        /**
-         * 设备制造商
-         */
-        private String manufacturer;
-        /**
-         * 设备型号
-         */
-        private String model;
-        /**
-         * 固件版本
-         */
-        private String firmwareVersion;
-        /**
-         * 硬件 ID
-         */
-        private String hardwareId;
-
-        /**
-         * 心跳时间
-         */
-        private Date keepaliveTime;
-        /**
-         * 用户名
-         */
-        private String userName;
-        /**
-         * 密码
-         */
-        private String password;
-
-        /**
-         * 通道信息
-         */
-        private List<MediaInfoDTO> mediaList;
-
-        /**
-         * 是否 ONVIF 协议
-         */
-        private boolean onvifProtocol;
-
-        /**
-         * 是否 PTZ 协议
-         */
-        private boolean ptzProtocol;
-
-        /**
-         * 是否已认证。
-         * 0: 待认证，1：已认证，2：认证失败
-         */
-        private Integer authedStatus = 0;
-
-        private Map<String, Object> extendMap;
+        return JSON.parseObject(extend, BaseDeviceInfoDTO.class);
     }
 }

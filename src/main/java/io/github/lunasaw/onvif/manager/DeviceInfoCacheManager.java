@@ -4,7 +4,10 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import io.github.lunasaw.onvif.model.dto.DeviceInfoDTO;
 import lombok.extern.slf4j.Slf4j;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.util.concurrent.TimeUnit;
 
@@ -40,6 +43,7 @@ public class DeviceInfoCacheManager {
      * @param deviceInfo 设备信息
      */
     public void putDeviceInfo(DeviceInfoDTO deviceInfo) {
+        Assert.isTrue(deviceInfo != null && StringUtils.isNotBlank(deviceInfo.getDeviceSn()), "设备序列号不能为空");
         if (deviceInfo != null && deviceInfo.getDeviceSn() != null) {
             deviceInfoCache.put(deviceInfo.getDeviceSn(), deviceInfo);
             log.debug("设备信息已更新到缓存: {}", deviceInfo.getDeviceSn());

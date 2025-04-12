@@ -11,5 +11,5 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Data
 public class ExtendMapDTO {
-    private Map<String, Object> extend = new ConcurrentHashMap<>();
+    private Map<String, Object> extendMap = new ConcurrentHashMap<>();
 }

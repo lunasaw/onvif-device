@@ -5,67 +5,79 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
 /**
- * I18H 私有协议响应
+ * onvif协议响应数据模型
  */
 @Getter
 @Setter
-public class OnvifDeviceInfoDTO extends DeviceAuthDTO {
+public class OnvifDeviceInfoDTO extends BaseDeviceInfoDTO {
 
 
-    private String serialNumber;
-    private String model;
-    private String manufacturer;
-    private String hardwareVersion;
-    private String softwareVersion;
-    private String hardwareId;
-    private String brand;
-    private boolean ptz;
-    /**
-     * 设备通道信息
-     */
-    private List<MediaInfoDTO> meidaList;
-
-    @Override
     public DeviceInfoDTO convert() {
         return convert(this);
     }
 
+    public static OnvifDeviceInfoDTO convert(DeviceInfoDTO deviceInfoDTO) {
+        if (deviceInfoDTO == null) {
+            return null;
+        }
 
-    public static DeviceInfoDTO convert(DeviceAuthDTO deviceAuthDTO) {
-        OnvifDeviceInfoDTO onvifDeviceInfo = (OnvifDeviceInfoDTO) deviceAuthDTO;
-        return convert(onvifDeviceInfo);
+        OnvifDeviceInfoDTO onvifDeviceInfoDTO = new OnvifDeviceInfoDTO();
+        BaseDeviceInfoDTO baseDeviceInfo = deviceInfoDTO.getBaseDeviceInfoObj();
+
+        // 设置基本信息
+        if (baseDeviceInfo != null) {
+            onvifDeviceInfoDTO.setName(baseDeviceInfo.getName());
+            onvifDeviceInfoDTO.setPort(baseDeviceInfo.getPort());
+            onvifDeviceInfoDTO.setUsername(baseDeviceInfo.getUsername());
+            onvifDeviceInfoDTO.setPassword(baseDeviceInfo.getPassword());
+            onvifDeviceInfoDTO.setSoftwareVersion(baseDeviceInfo.getSoftwareVersion());
+            onvifDeviceInfoDTO.setBrand(baseDeviceInfo.getBrand());
+            onvifDeviceInfoDTO.setManufacturer(baseDeviceInfo.getManufacturer());
+            onvifDeviceInfoDTO.setModel(baseDeviceInfo.getModel());
+            onvifDeviceInfoDTO.setFirmwareVersion(baseDeviceInfo.getFirmwareVersion());
+            onvifDeviceInfoDTO.setHardwareId(baseDeviceInfo.getHardwareId());
+            onvifDeviceInfoDTO.setKeepaliveTime(baseDeviceInfo.getKeepaliveTime());
+            onvifDeviceInfoDTO.setMediaList(baseDeviceInfo.getMediaList());
+        }
+
+        // 设置IP和序列号（这些字段在DeviceInfoDTO中）
+        onvifDeviceInfoDTO.setIp(deviceInfoDTO.getIpAddr());
+        onvifDeviceInfoDTO.setSerialNumber(deviceInfoDTO.getDeviceSn());
+
+        return onvifDeviceInfoDTO;
     }
 
     public static DeviceInfoDTO convert(OnvifDeviceInfoDTO onvifDeviceInfo) {
         DeviceInfoDTO deviceInfoDTO = new DeviceInfoDTO();
-
         deviceInfoDTO.setCreateTime(new Date());
         deviceInfoDTO.setUpdateTime(new Date());
-        // DeviceInfoTypeEnum.CAMERA
-        deviceInfoDTO.setType(0);
+        deviceInfoDTO.setType(0); // DeviceInfoTypeEnum.CAMERA
         deviceInfoDTO.setDeviceSn(onvifDeviceInfo.getSerialNumber());
         deviceInfoDTO.setIpAddr(onvifDeviceInfo.getIp());
         deviceInfoDTO.setDeviceStatus(1);
 
-        DeviceInfoDTO.ExtendInfo extendInfo = new DeviceInfoDTO.ExtendInfo();
-
-        // 这个与onvif结果最匹配
-        extendInfo.setFirmwareVersion(onvifDeviceInfo.getHardwareVersion());
-        extendInfo.setHardwareId(onvifDeviceInfo.getSoftwareVersion());
-        extendInfo.setHardwareId(onvifDeviceInfo.getHardwareId());
-        extendInfo.setManufacturer(onvifDeviceInfo.getManufacturer());
-        extendInfo.setModel(onvifDeviceInfo.getModel());
-        extendInfo.setKeepaliveTime(new Date());
-        extendInfo.setUserName(onvifDeviceInfo.getUsername());
-        extendInfo.setPassword(onvifDeviceInfo.getPassword());
-        extendInfo.setOnvifProtocol(true);
-        extendInfo.setPtzProtocol(onvifDeviceInfo.isPtz());
-        extendInfo.setMediaList(onvifDeviceInfo.getMeidaList());
-        deviceInfoDTO.setExtendInfoObj(extendInfo);
-        deviceInfoDTO.setExtentInfo(JSON.toJSONString(extendInfo));
+        deviceInfoDTO.setBaseDeviceInfoObj(onvifDeviceInfo);
+        deviceInfoDTO.setExtentInfo(JSON.toJSONString(onvifDeviceInfo));
         return deviceInfoDTO;
+    }
+
+    /**
+     * 判断设备是否在线
+     * 如果心跳时间超过5分钟则认为离线
+     * @return true:在线 false:离线
+     */
+    public boolean isOnline() {
+        Date keepaliveTime = getKeepaliveTime();
+        if (keepaliveTime == null) {
+            return false;
+        }
+
+        long currentTime = System.currentTimeMillis();
+        long lastKeepAliveTime = keepaliveTime.getTime();
+
+        // 5分钟 = 5 * 60 * 1000 毫秒
+        return (currentTime - lastKeepAliveTime) <= 5 * 60 * 1000;
     }
 }
