@@ -6,6 +6,7 @@ zlm:
       enabled: true
 
 device:
+  support-manufacturers: HIKVISION,xsh,Dahua,ONVIF_WDZ_HK
   stream-configs:
     - manufacturer: xsh
       stream-type: main

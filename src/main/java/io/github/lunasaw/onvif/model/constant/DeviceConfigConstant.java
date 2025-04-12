@@ -7,6 +7,8 @@ package io.github.lunasaw.onvif.model.constant;
  * @description: 常量类
  */
 public class DeviceConfigConstant {
+    public static final String SUPPORT_MANUFACTURERS = "HIKVISION,xsh,Dahua,ONVIF_WDZ_HK";
+
     public static final String DEVICE_STREAM_CONFIG = "[\n" +
             "  {\n" +
             "    \"manufacturer\": \"xsh\",\n" +
