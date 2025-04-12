@@ -67,6 +67,8 @@ public class OnvifDeviceManager {
             device.setOnvifDevice(onvifDevice);
             device.setPassword(workingPassword);
             device.setUsername(workingUser);
+            device.setIp(ip);
+            device.setPort(port);
             return device;
         } catch (Throwable e) {
             log.error("单次设备设备发现 获取构建Onvif设备失败 getSoapOnvifDevice::ip = {}, port = {} ", ip, port, e);

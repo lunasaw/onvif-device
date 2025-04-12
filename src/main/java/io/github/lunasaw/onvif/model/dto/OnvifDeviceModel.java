@@ -15,4 +15,6 @@ public class OnvifDeviceModel {
     private OnvifDevice onvifDevice;
     private String username;
     private String password;
+    private String ip;
+    private int port;
 }
