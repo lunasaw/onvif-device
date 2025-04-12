@@ -6,8 +6,8 @@ package io.github.lunasaw.onvif.model.constant;
  * @date 2024/1/1
  * @description: 常量类
  */
-public class Constant {
-    public static final String CAMERA_STREAM_CONFIG = "[\n" +
+public class DeviceConfigConstant {
+    public static final String DEVICE_STREAM_CONFIG = "[\n" +
             "  {\n" +
             "    \"manufacturer\": \"xsh\",\n" +
             "    \"streamType\": \"main\",\n" +
@@ -70,7 +70,7 @@ public class Constant {
             "  }\n" +
             "]";
 
-    public static final String CAMERA_USER_PASSWORD_CONFIG = "[\n" +
+    public static final String DEVICE_USER_PASSWORD_CONFIG = "[\n" +
             "    {\n" +
             "        \"port\": -1,\n" +
             "        \"username\": \"admin\",\n" +

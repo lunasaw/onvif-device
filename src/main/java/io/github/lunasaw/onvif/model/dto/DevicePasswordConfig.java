@@ -1,4 +1,4 @@
-package io.github.lunasaw.onvif.model;
+package io.github.lunasaw.onvif.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class CameraPasswordConfig {
+public class DevicePasswordConfig {
     private String username;
     private String password;
     private String port;
