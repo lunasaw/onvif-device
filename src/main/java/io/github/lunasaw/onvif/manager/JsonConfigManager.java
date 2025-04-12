@@ -24,8 +24,8 @@ public class JsonConfigManager {
      *
      * @return 摄像头流配置列表
      */
-    public static List<DeviceStreamConfig> getCameraStreamConfigs() {
-        return parseConfig(DeviceConfigConstant.DEVICE_STREAM_CONFIG, DeviceStreamConfig.class, Lists::newArrayList);
+    public static List<DeviceStreamConfig.StreamConfig> getCameraStreamConfigs() {
+        return parseConfig(DeviceConfigConstant.DEVICE_STREAM_CONFIG, DeviceStreamConfig.StreamConfig.class, Lists::newArrayList);
     }
 
     /**
@@ -33,8 +33,8 @@ public class JsonConfigManager {
      *
      * @return 摄像头密码配置列表
      */
-    public static List<DevicePasswordConfig> getCameraPasswordConfigs() {
-        return parseConfig(DeviceConfigConstant.DEVICE_USER_PASSWORD_CONFIG, DevicePasswordConfig.class, Lists::newArrayList);
+    public static List<DevicePasswordConfig.PasswordConfig> getCameraPasswordConfigs() {
+        return parseConfig(DeviceConfigConstant.DEVICE_USER_PASSWORD_CONFIG, DevicePasswordConfig.PasswordConfig.class, Lists::newArrayList);
     }
 
     /**
@@ -43,8 +43,8 @@ public class JsonConfigManager {
      * @param jsonConfig 动态JSON配置字符串
      * @return 摄像头流配置列表，如果解析失败则返回空列表
      */
-    public static List<DeviceStreamConfig> parseCameraStreamConfigs(String jsonConfig) {
-        return parseConfig(jsonConfig, DeviceStreamConfig.class, JsonConfigManager::getCameraStreamConfigs);
+    public static List<DeviceStreamConfig.StreamConfig> parseCameraStreamConfigs(String jsonConfig) {
+        return parseConfig(jsonConfig, DeviceStreamConfig.StreamConfig.class, JsonConfigManager::getCameraStreamConfigs);
     }
 
     /**
@@ -53,8 +53,8 @@ public class JsonConfigManager {
      * @param jsonConfig 动态JSON配置字符串
      * @return 摄像头密码配置列表，如果解析失败则返回空列表
      */
-    public static List<DevicePasswordConfig> parseCameraPasswordConfigs(String jsonConfig) {
-        return parseConfig(jsonConfig, DevicePasswordConfig.class, JsonConfigManager::getCameraPasswordConfigs);
+    public static List<DevicePasswordConfig.PasswordConfig> parseCameraPasswordConfigs(String jsonConfig) {
+        return parseConfig(jsonConfig, DevicePasswordConfig.PasswordConfig.class, JsonConfigManager::getCameraPasswordConfigs);
     }
 
     /**

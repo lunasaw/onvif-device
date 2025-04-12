@@ -1,18 +1,27 @@
 package io.github.lunasaw.onvif.model.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author luna
  * @version 1.0
  * @date 2024/1/1
- * @description: 摄像头密码配置模型
+ * @description: 设备密码配置
  */
-@Getter
-@Setter
+@Data
+@Component
+@ConfigurationProperties(prefix = "device")
 public class DevicePasswordConfig {
-    private String username;
-    private String password;
-    private String port;
+    private List<PasswordConfig> passwordConfigs;
+
+    @Data
+    public static class PasswordConfig {
+        private int port;
+        private String username;
+        private String password;
+    }
 }

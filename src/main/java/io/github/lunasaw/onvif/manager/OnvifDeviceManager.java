@@ -23,28 +23,47 @@ import java.util.stream.Collectors;
 public class OnvifDeviceManager {
 
     /**
-     * 获取Onvif设备
+     * 获取Onvif设备（默认实现）
      *
      * @param ip   设备IP
      * @param port 设备端口
      * @return Onvif设备模型
      */
     public OnvifDeviceModel getOnvifDevice(String ip, int port) {
+        List<DevicePasswordConfig.PasswordConfig> cameraPasswordConfigs = JsonConfigManager.getCameraPasswordConfigs();
+        Assert.isTrue(CollectionUtils.isNotEmpty(cameraPasswordConfigs), "单次设备设备发现 [Onvif] getCameraPasswordConfigs is null");
+        Map<Integer, List<DevicePasswordConfig.PasswordConfig>> portPasswordMap = cameraPasswordConfigs.stream()
+                .collect(Collectors.groupingBy(DevicePasswordConfig.PasswordConfig::getPort));
+
+        List<DevicePasswordConfig.PasswordConfig> cameraPasswordConfigList = portPasswordMap.get(port);
+        Assert.isTrue(CollectionUtils.isNotEmpty(cameraPasswordConfigList), "单次设备设备发现 [Onvif] 对应port没有配置设备发现密码");
+
+        return getOnvifDevice(ip, port, cameraPasswordConfigList);
+    }
+
+    /**
+     * 获取Onvif设备
+     *
+     * @param ip   设备IP
+     * @param port 设备端口
+     * @param passwordConfigs 密码配置列表
+     * @return Onvif设备模型
+     */
+    public OnvifDeviceModel getOnvifDevice(String ip, int port, List<DevicePasswordConfig.PasswordConfig> passwordConfigs) {
         OnvifDeviceModel device = new OnvifDeviceModel();
         try {
-            List<DevicePasswordConfig> cameraPasswordConfigs = JsonConfigManager.getCameraPasswordConfigs();
-            Assert.isTrue(CollectionUtils.isNotEmpty(cameraPasswordConfigs), "单次设备设备发现 [Onvif] getCameraPasswordConfigs is null");
-            Map<String, List<DevicePasswordConfig>> portPasswordMap = cameraPasswordConfigs.stream()
-                    .collect(Collectors.groupingBy(DevicePasswordConfig::getPort));
-
-            List<DevicePasswordConfig> cameraPasswordConfigList = portPasswordMap.get(String.valueOf(port));
-            Assert.isTrue(CollectionUtils.isNotEmpty(cameraPasswordConfigList), "单次设备设备发现 [Onvif] 对应port没有配置设备发现密码");
+            Assert.isTrue(CollectionUtils.isNotEmpty(passwordConfigs), "单次设备设备发现 [Onvif] passwordConfigs is null");
 
             OnvifDevice onvifDevice = null;
             String workingPassword = null;
             String workingUser = null;
 
-            for (DevicePasswordConfig config : cameraPasswordConfigList) {
+            for (DevicePasswordConfig.PasswordConfig config : passwordConfigs) {
+                if (port != config.getPort()) {
+                    log.info("单次设备设备发现 端口不匹配跳过 getOnvifDevice::ip = {}, port = {}, configPort = {}, username = {}, password = {}",
+                            ip, port, config.getPort(), config.getUsername(), config.getPassword());
+                    continue;
+                }
                 String password = config.getPassword();
                 String username = config.getUsername();
                 try {
