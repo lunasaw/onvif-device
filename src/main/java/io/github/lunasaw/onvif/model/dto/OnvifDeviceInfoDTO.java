@@ -23,30 +23,7 @@ public class OnvifDeviceInfoDTO extends BaseDeviceInfoDTO {
             return null;
         }
 
-        OnvifDeviceInfoDTO onvifDeviceInfoDTO = new OnvifDeviceInfoDTO();
-        BaseDeviceInfoDTO baseDeviceInfo = deviceInfoDTO.getBaseDeviceInfoObj();
-
-        // 设置基本信息
-        if (baseDeviceInfo != null) {
-            onvifDeviceInfoDTO.setName(baseDeviceInfo.getName());
-            onvifDeviceInfoDTO.setPort(baseDeviceInfo.getPort());
-            onvifDeviceInfoDTO.setUsername(baseDeviceInfo.getUsername());
-            onvifDeviceInfoDTO.setPassword(baseDeviceInfo.getPassword());
-            onvifDeviceInfoDTO.setSoftwareVersion(baseDeviceInfo.getSoftwareVersion());
-            onvifDeviceInfoDTO.setBrand(baseDeviceInfo.getBrand());
-            onvifDeviceInfoDTO.setManufacturer(baseDeviceInfo.getManufacturer());
-            onvifDeviceInfoDTO.setModel(baseDeviceInfo.getModel());
-            onvifDeviceInfoDTO.setFirmwareVersion(baseDeviceInfo.getFirmwareVersion());
-            onvifDeviceInfoDTO.setHardwareId(baseDeviceInfo.getHardwareId());
-            onvifDeviceInfoDTO.setKeepaliveTime(baseDeviceInfo.getKeepaliveTime());
-            onvifDeviceInfoDTO.setMediaList(baseDeviceInfo.getMediaList());
-        }
-
-        // 设置IP和序列号（这些字段在DeviceInfoDTO中）
-        onvifDeviceInfoDTO.setIp(deviceInfoDTO.getIpAddr());
-        onvifDeviceInfoDTO.setSerialNumber(deviceInfoDTO.getDeviceSn());
-
-        return onvifDeviceInfoDTO;
+        return JSON.parseObject(deviceInfoDTO.getExtentInfo(), OnvifDeviceInfoDTO.class);
     }
 
     public static DeviceInfoDTO convert(OnvifDeviceInfoDTO onvifDeviceInfo) {

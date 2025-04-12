@@ -2,14 +2,16 @@ package io.github.lunasaw.onvif.model.dto;
 
 import com.alibaba.fastjson2.JSON;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-@Data
+@Getter
+@Setter
 public class DeviceInfoDTO {
     /**
      * ID

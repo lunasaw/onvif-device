@@ -21,4 +21,5 @@ public class DeviceOnLineDTO extends ExtendMapDTO {
      * 心跳时间
      */
     private Date keepaliveTime;
+
 }
