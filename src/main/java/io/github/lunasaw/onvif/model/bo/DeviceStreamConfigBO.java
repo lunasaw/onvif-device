@@ -1,4 +1,4 @@
-package io.github.lunasaw.onvif.model.dto;
+package io.github.lunasaw.onvif.model.bo;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @Component
 @ConfigurationProperties(prefix = "device")
-public class DeviceStreamConfig {
+public class DeviceStreamConfigBO {
     private List<StreamConfig> streamConfigs;
 
     @Data

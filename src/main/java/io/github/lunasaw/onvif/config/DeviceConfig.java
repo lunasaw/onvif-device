@@ -1,7 +1,8 @@
 package io.github.lunasaw.onvif.config;
 
-import io.github.lunasaw.onvif.model.dto.DevicePasswordConfig;
-import io.github.lunasaw.onvif.model.dto.DeviceStreamConfig;
+import io.github.lunasaw.onvif.model.bo.DevicePasswordConfigBO;
+import io.github.lunasaw.onvif.model.bo.DeviceStreamConfigBO;
+
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,6 +13,6 @@ import org.springframework.context.annotation.Configuration;
  * @description: 设备配置类
  */
 @Configuration
-@EnableConfigurationProperties({DeviceStreamConfig.class, DevicePasswordConfig.class})
+@EnableConfigurationProperties({DeviceStreamConfigBO.class, DevicePasswordConfigBO.class})
 public class DeviceConfig {
 }

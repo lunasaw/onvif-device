@@ -6,9 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import io.github.lunasaw.onvif.model.bo.DevicePasswordConfigBO;
+import io.github.lunasaw.onvif.model.bo.DeviceStreamConfigBO;
 import io.github.lunasaw.onvif.model.constant.DeviceConfigConstant;
-import io.github.lunasaw.onvif.model.dto.DevicePasswordConfig;
-import io.github.lunasaw.onvif.model.dto.DeviceStreamConfig;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,8 +32,8 @@ public class JsonConfigManager {
      *
      * @return 摄像头流配置列表
      */
-    public static List<DeviceStreamConfig.StreamConfig> getCameraStreamConfigs() {
-        return parseConfig(DeviceConfigConstant.DEVICE_STREAM_CONFIG, DeviceStreamConfig.StreamConfig.class, Lists::newArrayList);
+    public static List<DeviceStreamConfigBO.StreamConfig> getCameraStreamConfigs() {
+        return parseConfig(DeviceConfigConstant.DEVICE_STREAM_CONFIG, DeviceStreamConfigBO.StreamConfig.class, Lists::newArrayList);
     }
 
     /**
@@ -41,8 +41,8 @@ public class JsonConfigManager {
      *
      * @return 摄像头密码配置列表
      */
-    public static List<DevicePasswordConfig.PasswordConfig> getCameraPasswordConfigs() {
-        return parseConfig(DeviceConfigConstant.DEVICE_USER_PASSWORD_CONFIG, DevicePasswordConfig.PasswordConfig.class, Lists::newArrayList);
+    public static List<DevicePasswordConfigBO.PasswordConfig> getCameraPasswordConfigs() {
+        return parseConfig(DeviceConfigConstant.DEVICE_USER_PASSWORD_CONFIG, DevicePasswordConfigBO.PasswordConfig.class, Lists::newArrayList);
     }
 
     /**
@@ -51,8 +51,8 @@ public class JsonConfigManager {
      * @param jsonConfig 动态JSON配置字符串
      * @return 摄像头流配置列表，如果解析失败则返回空列表
      */
-    public static List<DeviceStreamConfig.StreamConfig> parseCameraStreamConfigs(String jsonConfig) {
-        return parseConfig(jsonConfig, DeviceStreamConfig.StreamConfig.class, JsonConfigManager::getCameraStreamConfigs);
+    public static List<DeviceStreamConfigBO.StreamConfig> parseCameraStreamConfigs(String jsonConfig) {
+        return parseConfig(jsonConfig, DeviceStreamConfigBO.StreamConfig.class, JsonConfigManager::getCameraStreamConfigs);
     }
 
     /**
@@ -61,8 +61,8 @@ public class JsonConfigManager {
      * @param jsonConfig 动态JSON配置字符串
      * @return 摄像头密码配置列表，如果解析失败则返回空列表
      */
-    public static List<DevicePasswordConfig.PasswordConfig> parseCameraPasswordConfigs(String jsonConfig) {
-        return parseConfig(jsonConfig, DevicePasswordConfig.PasswordConfig.class, JsonConfigManager::getCameraPasswordConfigs);
+    public static List<DevicePasswordConfigBO.PasswordConfig> parseCameraPasswordConfigs(String jsonConfig) {
+        return parseConfig(jsonConfig, DevicePasswordConfigBO.PasswordConfig.class, JsonConfigManager::getCameraPasswordConfigs);
     }
 
     /**
