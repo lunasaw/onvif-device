@@ -9,8 +9,8 @@
     <artifactId>onvif-device-test</artifactId>
     <packaging>jar</packaging>
     <name>onvif-device-test</name>
-    <description>ZLMediaKit restful api and hook starter test</description>
-    <url>https://github.com/lunasaw/gb28181-proxy</url>
+    <description>onvif device operate test</description>
+    <url>https://github.com/lunasaw/onvif-device</url>
 
 
     <properties>
