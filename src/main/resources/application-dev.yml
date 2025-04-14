@@ -4,3 +4,62 @@ zlm:
       host: "http://127.0.0.1:9092"
       secret: zlm
       enabled: true
+
+device:
+  support-manufacturers: HIKVISION,xsh,Dahua,ONVIF_WDZ_HK
+  stream-configs:
+    - manufacturer: xsh
+      stream-type: main
+      media-name: D01_CH01_Main
+      url-template: rtsp://{ip}/camera1/main
+    - manufacturer: xsh
+      stream-type: sub
+      media-name: D01_CH01_Sub
+      url-template: rtsp://{ip}/camera1/sub
+    - manufacturer: HIKVISION
+      stream-type: main
+      media-name: D01_CH01_Main
+      url-template: rtsp://{username}:{password}@{ip}:554/h265/ch1/main/av_stream
+    - manufacturer: HIKVISION
+      stream-type: sub
+      media-name: D01_CH01_Sub
+      url-template: rtsp://{username}:{password}@{ip}:554/h265/ch1/sub/av_stream
+    - manufacturer: ONVIF_WDZ_HK
+      stream-type: main
+      media-name: D01_CH01_Main
+      url-template: rtsp://{username}:{password}@{ip}:554/h265/ch1/main/av_stream
+    - manufacturer: ONVIF_WDZ_HK
+      stream-type: sub
+      media-name: D01_CH01_Sub
+      url-template: rtsp://{username}:{password}@{ip}:554/h265/ch1/sub/av_stream
+    - manufacturer: Dahua
+      stream-type: main
+      media-name: D01_CH01_Main
+      url-template: rtsp://{username}:{password}@{ip}:554/cam/realmonitor?channel=1&subtype=0
+    - manufacturer: Dahua
+      stream-type: sub
+      media-name: D01_CH01_Sub
+      url-template: rtsp://{username}:{password}@{ip}:554/cam/realmonitor?channel=1&subtype=1
+
+  password-configs:
+    - port: -1
+      username: admin
+      password: weidian_24h
+    - port: -1
+      username: admin
+      password: admin
+    - port: -1
+      username: admin
+      password: admin123
+    - port: 80
+      username: admin
+      password: admin123
+    - port: 80
+      username: admin
+      password: admin
+    - port: 80
+      username: admin
+      password: weidian_24h
+    - port: 8000
+      username: admin
+      password: admin
