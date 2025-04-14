@@ -1,7 +1,6 @@
 package io.github.lunasaw.onvif.model.dto;
 
 import com.alibaba.fastjson2.JSON;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

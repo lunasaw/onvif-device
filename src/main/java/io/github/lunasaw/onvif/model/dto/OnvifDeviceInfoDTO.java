@@ -46,6 +46,9 @@ public class OnvifDeviceInfoDTO extends BaseDeviceInfoDTO {
      * @return true:在线 false:离线
      */
     public boolean isOnline() {
+        if (getDeviceStatus() == 1) {
+            return true;
+        }
         Date keepaliveTime = getKeepaliveTime();
         if (keepaliveTime == null) {
             return false;
